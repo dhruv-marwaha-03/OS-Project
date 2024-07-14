@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU Scheduler</title>
+    <!-- - favicon -->
+    <link rel="shortcut icon" href="./static/assets/ubuntu.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>OS Group Project: CPU Scheduler</h1>
+    </header>
+
+    <div class="big-box">
+        <div class="def">
+            <div class="def-box">
+                <div>
+                <h2>CPU Scheduling in Operating Systems</h2>
+                <br><p>
+                    Scheduling of processes/work is done to finish the work on time. CPU Scheduling is a    process   that allows one process to use the CPU while another process is delayed  (in standby) due to   unavailability of any resources such as I/O etc, thus making   full use of the CPU. The purpose   of CPU Scheduling is to make the system more   efficient, faster, and fairer.
+                </p>
+                <br>
+                <p>
+                    CPU scheduling is a key part of how an operating system works. It decides which task    (or   process) the CPU should work on at any given time. This is important because a   CPU can only   handle one task at a time, but there are usually many tasks that need  to be processed. In this    article, we are going to discuss CPU scheduling in   detail.
+                </p>
+                <br>
+                <p>
+                    Whenever the CPU becomes idle, the operating system must select one of the processes    in the    line ready for launch. The selection process is done by a temporary (CPU) scheduler. The   Scheduler selects between memory processes ready to launch and    assigns the CPU to one of them.
+                </p><br>
+                </div>
+                <div class="parent-diag">
+                    <img src="https://media.geeksforgeeks.org/wp-content/uploads/20220525174157/UntitledDiagram12.jpg" alt="cpu-scheduling diagram" class="diag">
+                </div>
+            </div>
+            <br>
+            <h2>Types of Scheduling Algorithms</h2>
+            <div class="buttons">
+                <a href="https://www.geeksforgeeks.org/first-come-first-serve-cpu-scheduling-non-preemptive/" target="_blank"><button class="button-35">First Come First Serve</button></a>
+                <a href="https://www.geeksforgeeks.org/program-for-shortest-job-first-or-sjf-cpu-scheduling-set-1-non-preemptive/" target="_blank"><button class="button-35">Shortest Job First</button></a>
+                <a href="https://www.geeksforgeeks.org/program-for-round-robin-scheduling-for-the-same-arrival-time/" target="_blank"><button class="button-35">Round Robin</button></a>
+                <a href="https://www.geeksforgeeks.org/preemptive-priority-cpu-scheduling-algortithm/" target="_blank"><button class="button-35">Priority Scheduling</button></a>
+            </div>
+            <!-- <button class="button-35" role="button">First Come First Serve</button>
+            <button class="button-33" role="button">Button 33</button>
+            <button class="button-85" role="button">Button 85</button> -->
+        </div>
+
+        <div class="ag-format-container">
+            <h2>Simulation</h2>
+            <div class="ag-courses_box">
+            
+                <div class="ag-courses_item">
+                    <a href="./fcfs" class="ag-courses-item_link">
+                        <div class="ag-courses-item_bg"></div>
+                    
+                        <div class="ag-courses-item_title">
+                            First Come First Serve<br>(FCFS)
+                        </div>
+                        <!-- <div class="ag-courses-item_date-box">
+                            Start:
+                            <span class="ag-courses-item_date">
+                                04.11.2022
+                            </span>
+                        </div> -->
+                    </a>
+                </div>
+            
+                <div class="ag-courses_item">
+                    <a href="./sjf" class="ag-courses-item_link">
+                        <div class="ag-courses-item_bg"></div>
+                    
+                        <div class="ag-courses-item_title">
+                            Shortest Job First<br>(SJF)
+                        </div>
+                        <!-- <div class="ag-courses-item_date-box">
+                            Start:
+                            <span class="ag-courses-item_date">
+                                04.11.2022
+                            </span>
+                        </div> -->
+                    </a>
+                </div>
+            
+                <div class="ag-courses_item">
+                    <a href="./rr" class="ag-courses-item_link">
+                        <div class="ag-courses-item_bg"></div>
+                    
+                        <div class="ag-courses-item_title">
+                            Round Robin<br>(RR)
+                        </div>
+                        <!-- <div class="ag-courses-item_date-box">
+                            Start:
+                            <span class="ag-courses-item_date">
+                                04.11.2022
+                            </span>
+                        </div> -->
+                    </a>
+                </div>
+            
+                <div class="ag-courses_item">
+                    <a href="./priority" class="ag-courses-item_link ">
+                        <div class="ag-courses-item_bg"></div>
+                    
+                        <div class="ag-courses-item_title">
+                            Priority Scheduling
+                        </div>
+                        <!-- <div class="ag-courses-item_date-box">
+                            Start:
+                            <span class="ag-courses-item_date">
+                                04.11.2022
+                            </span>
+                        </div> -->
+                    </a>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+
+    <section class="team">
+		<div class="center">
+			<h1>Our Team</h1>
+		</div>
+
+		<div class="team-content">
+			<div class="box">
+				<img src="/static/assets/geetansh.png">
+				<h3>Geetansh Mohindru</h3>
+				<h5>102203718</h5>
+				<h5>Front-End Dev</h5>
+				<div class="icons">
+					<a href="https://github.com/GeetanshMohindru" target="_blank"><i class="ri-github-fill"></i></a>
+					<a href="https://www.linkedin.com/in/geetansh-mohindru/" target="_blank"><i class="ri-linkedin-box-fill"></i></a>
+					<a href="https://www.instagram.com/geetansh_mohindru/" target="_blank"><i class="ri-instagram-fill"></i></a>
+				</div>
+			</div>
+
+			<div class="box">
+				<img src="/static/assets/dhruv.png">
+				<h3>Dhruv Marwaha</h3>
+				<h5>102116049</h5>
+                <h5>Back-End Dev</h5>
+				<div class="icons">
+					<a href="https://github.com/dhruv-marwaha-03" target="_blank"><i class="ri-github-fill"></i></a>
+					<a href="https://www.linkedin.com/in/dhruv-marwaha-a55288265/" target="_blank"><i class="ri-linkedin-box-fill"></i></a>
+					<a href="#" target="_blank"><i class="ri-instagram-fill"></i></a>
+				</div>
+			</div>
+            
+            <div class="box">
+				<img src="/static/assets/pareesh.png">
+				<h3>Pareesh Sharma</h3>
+				<h5>102116092</h5>
+				<h5>Content</h5>
+				<div class="icons">
+					<a href="#" target="_blank"><i class="ri-github-fill"></i></a>
+					<a href="#" target="_blank"><i class="ri-linkedin-box-fill"></i></a>
+					<a href="#" target="_blank"><i class="ri-instagram-fill"></i></a>
+				</div>
+			</div>
+
+			<div class="box">
+				<img src="/static/assets/anshuman.png">
+				<h3>Anshuman Singh </h3>
+				<h5>102203809</h5>
+                <h5>Content</h5>
+				<div class="icons">
+					<a href="#" target="_blank"><i class="ri-github-fill"></i></a>
+					<a href="https://www.linkedin.com/in/anshuman-kathait-887268212/" target="_blank"><i class="ri-linkedin-box-fill"></i></a>
+					<a href="#" target="_blank"><i class="ri-instagram-fill"></i></a>
+				</div>
+			</div>
+
+		</div>
+	</section>
+
+    <footer>
+        <div class="footer-content">
+            Submitted to: Dr. Shashank S. Singh
+        </div>
+    </footer>
+</body>
+</html>

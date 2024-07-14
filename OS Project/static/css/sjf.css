@@ -1,0 +1,120 @@
+/* Base styles */
+body {
+    background-color: black;
+    font-family: 'Arial', sans-serif;
+    color: #FFFFFF;
+}
+
+/* Container */
+.container {
+    max-width: 900px;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #121212;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    color:#3ecd5e;
+}
+
+/* Form */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.btn-custom {
+    background-color:#3ecd5e;
+    color: #FFFFFF;
+    border: none;
+    transition: transform 0.2s;
+}
+
+.btn-custom:hover {
+    color: #FFFFFF;
+    transform: scale(1.1);
+}
+
+/* Table */
+.table {
+    margin-top: 20px;
+    background-color: #252525;
+}
+
+.table th, .table td {
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.table thead {
+    background-color:#3ecd5e
+;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #2A2A2A;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #1F1F1F;
+}
+
+/* Input and select */
+.form-control, .custom-select {
+    background-color: #1E1E1E;
+    color: #FFFFFF;
+    border: 1px solid#3ecd5e
+;
+}
+
+.form-control:focus, .custom-select:focus {
+    outline: none;
+    border-color:#3ecd5e
+;
+    box-shadow: 0 0 0 0.2rem rgba(45, 155, 173, 0.25);
+}
+
+/* Gantt Chart */
+#ganttChart {
+    margin-top: 30px;
+}
+
+/* Option */
+.custom-select option {
+    background-color: #1E1E1E;
+    color: #FFFFFF;
+}
+.delete-btn {
+    /* color: #dc3545; */
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #3ecd5e;
+    
+ 
+
+}
+.delete-btn:hover{
+    color:white;
+}
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 5px 10px;
+    border-radius: 100%;
+    text-decoration: none;
+    font-size: 20px;
+    background-color:#3ecd5e;
+    color:black;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
+    /* transition: background-color 0.2s, transform 0.2s; */
+}
+.back-btn:hover{
+    background-color:#3ecd5e;
+    color:white;
+}

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SJF Scheduling</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sjf.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+    <div class="container">
+        <div class="header">
+            <h1>SJF Scheduling Algorithm</h1>
+        </div>
+
+        <form id="processForm">
+            <div class="form-group">
+                <label for="pid">Process ID</label>
+                <input type="number" class="form-control" id="pid" name="pid" required>
+            </div>
+            <div class="form-group">
+                <label for="burst_time">Burst Time</label>
+                <input type="number" class="form-control" id="burst_time" name="burst_time" required>
+            </div>
+            <div class="form-group">
+                <label for="arrival_time">Arrival Time</label>
+                <input type="number" class="form-control" id="arrival_time" name="arrival_time" required>
+            </div>
+            
+            <button type="button" class="btn btn-custom" id="addProcess">Add Process</button>
+        </form>
+
+        <table class="table table-striped" id="processTable">
+            <thead>
+                <tr>
+                    <th>PID</th>
+                    <th>Burst Time</th>
+                    <th>Arrival Time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <form id="algorithmForm">
+            <div class="form-group">
+                <label for="algorithm">Scheduling Algorithm</label>
+                <select id="algorithm" name="algorithm" class="custom-select">
+                    <option value="SJF" selected>SJF</option>
+                </select>
+            </div>
+            <div class="form-group" id="preemptionGroup" style="display: block;">
+                <label for="preemption">Preemption</label>
+                <select id="preemption" name="preemption" class="custom-select">
+                    <option value="Preemptive">Preemptive</option>
+                    <option value="Non-Preemptive">Non-Preemptive</option>
+                </select>
+            </div>
+            <button type="button" class="btn btn-custom" id="simulate">Start Simulation</button>
+        </form>
+
+        <h2 class="mt-5">Simulation Results</h2>
+        <table class="table table-bordered" id="resultTable">
+            <thead>
+                <tr>
+                    <th>PID</th>
+                    <th>Burst Time</th>
+                    <th>Arrival Time</th>
+                    <th>Completion Time</th>
+                    <th>Waiting Time</th>
+                    <th>Turnaround Time</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <h2 class="mt-5">Averages</h2>
+        <div id="averages">
+            <!-- Average waiting time and turnaround time will be inserted here -->
+        </div>
+
+        <h2 class="mt-5">Execution Timeline</h2>
+        <canvas id="ganttChart" width="800" height="400"></canvas>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+    <script>
+        // Add process to the table
+        document.getElementById('addProcess').addEventListener('click', function () {
+            const pid = document.getElementById('pid').value;
+            const burstTime = document.getElementById('burst_time').value;
+            const arrivalTime = document.getElementById('arrival_time').value;
+
+            if (!pid || !burstTime || !arrivalTime) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            const table = document.getElementById('processTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            newRow.insertCell(0).textContent = pid;
+            newRow.insertCell(1).textContent = burstTime;
+            newRow.insertCell(2).textContent = arrivalTime;
+
+            const deleteCell = newRow.insertCell(3); // Changed index from 4 to 3
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.addEventListener('click', function () {
+                newRow.remove();
+            });
+            deleteCell.appendChild(deleteBtn);
+
+            // Reset the form fields
+            document.getElementById('pid').value = '';
+            document.getElementById('burst_time').value = '';
+            document.getElementById('arrival_time').value = '';
+        });
+
+        // Gantt chart variable
+        let ganttChart;
+
+        // Function to start simulation and display results and Gantt Chart
+        function startSimulation() {
+            const rows = document.getElementById('processTable').getElementsByTagName('tbody')[0].rows;
+            const processes = Array.from(rows).map(row => {
+                return {
+                    pid: parseInt(row.cells[0].textContent),
+                    burst_time: parseInt(row.cells[1].textContent),
+                    arrival_time: parseInt(row.cells[2].textContent)
+                };
+            });
+
+            const algorithm = document.getElementById('algorithm').value;
+            const preemption = document.getElementById('preemption').value;
+
+            const data = {
+                processes: processes,
+                algorithm: algorithm,
+                preemption: preemption
+            };
+
+            fetch('/simulate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                const resultTableBody = document.getElementById('resultTable').getElementsByTagName('tbody')[0];
+                resultTableBody.innerHTML = '';
+
+                let totalCompletionTime = 0;
+                let totalWaitingTime = 0;
+                let totalTurnaroundTime = 0;
+
+                result.forEach(process => {
+                    const newRow = resultTableBody.insertRow();
+                    newRow.insertCell(0).textContent = process.pid;
+                    newRow.insertCell(1).textContent = process.burst_time;
+                    newRow.insertCell(2).textContent = process.arrival_time;
+                    newRow.insertCell(3).textContent = process.completion_time;
+                    newRow.insertCell(4).textContent = process.waiting_time;
+                    newRow.insertCell(5).textContent = process.turnaround_time;
+
+                    totalCompletionTime += process.completion_time;
+                    totalWaitingTime += process.waiting_time;
+                    totalTurnaroundTime += process.turnaround_time;
+                });
+                const numProcesses = result.length;
+                const avgWaitingTime = totalWaitingTime / numProcesses;
+                const avgTurnaroundTime = totalTurnaroundTime / numProcesses;
+
+                // Display averages
+                const averagesDiv = document.getElementById('averages');
+                averagesDiv.innerHTML = `
+                    <p><strong style="color:#3ecd5e;">Average Waiting Time:</strong> ${avgWaitingTime.toFixed(2)}</p>
+                    <p><strong style="color:#3ecd5e;">Average Turnaround Time:</strong> ${avgTurnaroundTime.toFixed(2)}</p>
+                `;
+
+                // Destroy existing chart if it exists
+                if (ganttChart) {
+                    ganttChart.destroy();
+                }
+
+                // Gantt Chart
+                const ctx = document.getElementById('ganttChart').getContext('2d');
+                ganttChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: result.map(p => `P${p.pid}`),
+                        datasets: [{
+                            label: 'Process Execution Time',
+                            data: result.map(p => ({
+                                x: p.pid,
+                                y: p.completion_time, // Replace with actual data to be displayed
+                                backgroundColor: '#3ecd5e'
+                            })),
+                            backgroundColor: '#3ecd5e'
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                stacked: true,
+                                title: {
+                                    display: true,
+                                    text: 'Processes'
+                                }
+                            },
+                            y: {
+                                stacked: true,
+                                title: {
+                                    display: true,
+                                    text: 'Time'
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
+        // Event listeners for start simulation button and preemption change
+        document.getElementById('simulate').addEventListener('click', startSimulation);
+        document.getElementById('preemption').addEventListener('change', startSimulation);
+    </script>
+</body>
+</html>
